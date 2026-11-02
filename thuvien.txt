@@ -1,0 +1,13 @@
+SACH|T123|1111|1111|2024|0|1111|1111
+BAO|B001|Báo Tuổi Trẻ|NXB Trẻ|2026|0|15/10/2026
+SACH|S001|Cấu Trúc Dữ Liệu & GT|NXB Giáo Dục|2024|0|420|Lê Minh Hoàng
+TAPCHI|TC01|Forbes Việt Nam|NXB Kinh Tế|2025|0|12|10
+SACH|S003|Kinh Tế Vĩ Mô|NXB Kinh Tế|2022|0|250|Paul Samuelson
+SACH|S007|Lược Sử Loài Người|NXB Tri Thức|2019|0|450|Yuval Harari
+SACH|S009|Nghệ Thuật Bán Hàng|NXB Trẻ|2021|0|200|Brian Tracy
+SACH|S005|Nhà Giả Kim|NXB Hội Nhà Văn|2015|1|220|Paulo Coelho
+SACH|S010|Thủy Hử|NXB Văn Học|2010|0|600|Thi Nại Am
+SACH|S008|Tâm Lý Học Tội Phạm|NXB CAND|2023|0|280|Stanton Samenow
+SACH|S004|Việt Nam Sử Lược|NXB Trẻ|2018|0|500|Trần Trọng Kim
+SACH|S006|Vũ Trụ (Cosmos)|NXB Khoa Học|2021|0|350|Carl Sagan
+SACH|S002|Đắc Nhân Tâm|NXB Tổng Hợp|2020|1|300|Dale Carnegie
