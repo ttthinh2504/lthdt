@@ -1,0 +1,105 @@
+{
+  "classes": [
+    {
+      "id": "VanBan",
+      "stereotype": "utility",
+      "package": "util",
+      "status": "support",
+      "read": 1,
+      "stage": 1,
+      "readWhy": "Lớp thấp nhất, không phụ thuộc lớp nào; các lớp khác đều dùng.",
+      "summary": "Các hàm xử lý chuỗi, hiểu UTF-8 tiếng Việt.",
+      "role": "Chỉ gồm hàm static, gọi qua tên lớp, không tạo đối tượng. Dùng để căn lề, cắt chuỗi, định dạng tiền và chuẩn hóa chuỗi khi so sánh.",
+      "uses": [],
+      "invariants": [],
+      "attributes": [],
+      "methods": [
+        {
+          "name": "doDaiHienThi",
+          "vis": "+",
+          "params": [
+            "s: string"
+          ],
+          "summary": "Đếm số ký tự hiển thị của chuỗi UTF-8 (bỏ qua byte nối tiếp).",
+          "returns": "int",
+          "static": true,
+          "example": "`doDaiHienThi(\"Đắc\")` = 3, dù chiếm 4 byte."
+        },
+        {
+          "name": "canLe",
+          "vis": "+",
+          "params": [
+            "s: string",
+            "width: int",
+            "alignRight: bool = false"
+          ],
+          "summary": "Thêm khoảng trắng cho đủ `width`; căn trái, hoặc căn phải nếu `alignRight`.",
+          "returns": "string",
+          "static": true,
+          "example": "`canLe(\"Đắc\", 6)` = `\"Đắc   \"`."
+        },
+        {
+          "name": "catChuoi",
+          "vis": "+",
+          "params": [
+            "s: string",
+            "maxLen: int"
+          ],
+          "summary": "Cắt chuỗi dài hơn `maxLen` ký tự và thêm `..` ở cuối.",
+          "returns": "string",
+          "static": true
+        },
+        {
+          "name": "lapChuoi",
+          "vis": "+",
+          "params": [
+            "s: string",
+            "n: int"
+          ],
+          "summary": "Lặp chuỗi `s` đúng `n` lần, dùng để vẽ đường kẻ.",
+          "returns": "string",
+          "static": true
+        },
+        {
+          "name": "dinhDangTien",
+          "vis": "+",
+          "params": [
+            "tien: double"
+          ],
+          "summary": "Đổi số tiền sang chuỗi có dấu chấm hàng nghìn và đơn vị đ.",
+          "returns": "string",
+          "static": true,
+          "example": "`dinhDangTien(1234567)` = `\"1.234.567 đ\"`."
+        },
+        {
+          "name": "chuThuong",
+          "vis": "+",
+          "params": [
+            "s: string"
+          ],
+          "summary": "Đổi chuỗi sang chữ thường, dùng để so sánh không phân biệt hoa thường.",
+          "returns": "string",
+          "static": true
+        },
+        {
+          "name": "catKhoangTrang",
+          "vis": "+",
+          "params": [
+            "s: string"
+          ],
+          "summary": "Bỏ khoảng trắng và ký tự xuống dòng ở hai đầu chuỗi.",
+          "returns": "string",
+          "static": true
+        }
+      ],
+      "impl": {
+        "cpp": "**Khoảng 68 dòng** trong `test1.cpp`."
+      },
+      "notes": [],
+      "pos": [
+        0,
+        950
+      ]
+    }
+  ]
+}

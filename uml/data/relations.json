@@ -1,0 +1,176 @@
+{
+  "relations": [
+    {
+      "id": "r01",
+      "from": "Sach",
+      "to": "TaiLieu",
+      "kind": "inheritance",
+      "label": "",
+      "explain": "Sách là một tài liệu; thêm tác giả và số trang."
+    },
+    {
+      "id": "r02",
+      "from": "TapChi",
+      "to": "TaiLieu",
+      "kind": "inheritance",
+      "label": "",
+      "explain": "Tạp chí là một tài liệu; thêm số và tháng phát hành."
+    },
+    {
+      "id": "r03",
+      "from": "Bao",
+      "to": "TaiLieu",
+      "kind": "inheritance",
+      "label": "",
+      "explain": "Báo là một tài liệu; thêm ngày phát hành."
+    },
+    {
+      "id": "r04",
+      "from": "TaiLieu",
+      "to": "VanBan",
+      "kind": "dependency",
+      "label": "canLe, catChuoi, dinhDangTien",
+      "explain": "`Xuat` và `xuatPhanDuoi` dùng để căn lề và định dạng một dòng bảng."
+    },
+    {
+      "id": "r05",
+      "from": "ThuVien",
+      "to": "TaiLieu",
+      "kind": "composition",
+      "label": "ds",
+      "explain": "Thư viện sở hữu `vector<TaiLieu*>` và xóa các tài liệu khi bị hủy.",
+      "fromMult": "1",
+      "toMult": "*"
+    },
+    {
+      "id": "r06",
+      "from": "ThuVien",
+      "to": "Sach",
+      "kind": "dependency",
+      "label": "tạo khi đọc file",
+      "explain": "`taoTuDong` và `taoDuLieuMau` tạo `Sach` bằng `new`."
+    },
+    {
+      "id": "r07",
+      "from": "ThuVien",
+      "to": "TapChi",
+      "kind": "dependency",
+      "label": "tạo khi đọc file",
+      "explain": "`taoTuDong` và `taoDuLieuMau` tạo `TapChi` bằng `new`."
+    },
+    {
+      "id": "r08",
+      "from": "ThuVien",
+      "to": "Bao",
+      "kind": "dependency",
+      "label": "tạo khi đọc file",
+      "explain": "`taoTuDong` và `taoDuLieuMau` tạo `Bao` bằng `new`."
+    },
+    {
+      "id": "r09",
+      "from": "ThuVien",
+      "to": "VanBan",
+      "kind": "dependency",
+      "label": "chuThuong, catKhoangTrang",
+      "explain": "So mã không phân biệt hoa thường và làm sạch dòng đọc từ file."
+    },
+    {
+      "id": "r10",
+      "from": "ThuVien",
+      "to": "TieuChiSapXep",
+      "kind": "dependency",
+      "label": "sapXep()",
+      "explain": "Tham số của `sapXep`; enum khai báo bên trong `ThuVien`."
+    },
+    {
+      "id": "r11",
+      "from": "ThuVien",
+      "to": "KetQua",
+      "kind": "dependency",
+      "label": "muon(), tra()",
+      "explain": "Kiểu trả về của `muon` và `tra`; enum khai báo bên trong `ThuVien`."
+    },
+    {
+      "id": "r12",
+      "from": "GiaoDien",
+      "to": "VanBan",
+      "kind": "dependency",
+      "label": "căn lề, kẻ khung",
+      "explain": "Căn giữa tiêu đề, vẽ đường kẻ, cắt khoảng trắng khi nhập."
+    },
+    {
+      "id": "r13",
+      "from": "UngDung",
+      "to": "ThuVien",
+      "kind": "composition",
+      "label": "thuVien",
+      "explain": "`UngDung` sở hữu thư viện duy nhất của chương trình.",
+      "fromMult": "1",
+      "toMult": "1"
+    },
+    {
+      "id": "r14",
+      "from": "UngDung",
+      "to": "GiaoDien",
+      "kind": "dependency",
+      "label": "menu, nhập, thông báo",
+      "explain": "Mọi chức năng đều vẽ và nhập liệu qua `GiaoDien`."
+    },
+    {
+      "id": "r15",
+      "from": "UngDung",
+      "to": "TaiLieu",
+      "kind": "dependency",
+      "label": "inBang",
+      "explain": "`inBang` duyệt danh sách và gọi `HienThiThongTin`."
+    },
+    {
+      "id": "r16",
+      "from": "UngDung",
+      "to": "Sach",
+      "kind": "dependency",
+      "label": "themMoi<Sach>",
+      "explain": "Chức năng 1 gọi `themMoi` với kiểu `Sach`."
+    },
+    {
+      "id": "r17",
+      "from": "UngDung",
+      "to": "TapChi",
+      "kind": "dependency",
+      "label": "themMoi<TapChi>",
+      "explain": "Chức năng 2 gọi `themMoi` với kiểu `TapChi`."
+    },
+    {
+      "id": "r18",
+      "from": "UngDung",
+      "to": "Bao",
+      "kind": "dependency",
+      "label": "themMoi<Bao>",
+      "explain": "Chức năng 3 gọi `themMoi` với kiểu `Bao`."
+    },
+    {
+      "id": "r19",
+      "from": "UngDung",
+      "to": "VanBan",
+      "kind": "dependency",
+      "label": "canLe, dinhDangTien",
+      "explain": "`xemDanhSach` căn lề dòng tổng và định dạng tổng giá trị."
+    },
+    {
+      "id": "r20",
+      "from": "UngDung",
+      "to": "KetQua",
+      "kind": "dependency",
+      "label": "chọn thông báo",
+      "explain": "`muonTaiLieu` và `traTaiLieu` dựa vào kết quả để chọn thông báo."
+    },
+    {
+      "id": "r21",
+      "from": "UngDung",
+      "to": "TieuChiSapXep",
+      "kind": "dependency",
+      "label": "sapXep()",
+      "explain": "Đổi lựa chọn menu thành tiêu chí sắp xếp."
+    }
+  ]
+}

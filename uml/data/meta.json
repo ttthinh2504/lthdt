@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "title": "Thiết kế UML hệ thống quản lý thư viện",
+    "version": "0.1",
+    "updated": "2026-11-04"
+  },
+  "packages": [
+    {
+      "id": "util",
+      "name": "Tiện ích chung",
+      "color": "#f59e0b",
+      "description": "Kiểu cơ bản và lớp VanBan xử lý chuỗi."
+    },
+    {
+      "id": "model",
+      "name": "Tài liệu",
+      "color": "#3b82f6",
+      "description": "TaiLieu và ba lớp con Sach, TapChi, Bao."
+    },
+    {
+      "id": "logic",
+      "name": "Nghiệp vụ thư viện",
+      "color": "#22c55e",
+      "description": "ThuVien: danh sách tài liệu, đọc/ghi file, mượn/trả, tìm, sắp xếp, xóa."
+    },
+    {
+      "id": "ui",
+      "name": "Giao diện và điều khiển",
+      "color": "#a855f7",
+      "description": "GiaoDien (console) và UngDung (vòng lặp menu chính)."
+    }
+  ],
+  "readingStages": [
+    {
+      "id": 0,
+      "title": "Kiểu cơ bản",
+      "text": "Các kiểu có sẵn của C++ dùng trong chữ ký. Không phải lớp; đọc trước nhất."
+    },
+    {
+      "id": 1,
+      "title": "Tiện ích chung",
+      "text": "Lớp VanBan: các hàm xử lý chuỗi."
+    },
+    {
+      "id": 2,
+      "title": "Tài liệu",
+      "text": "Lớp cha TaiLieu và ba lớp con Sach, TapChi, Bao: kế thừa và đa hình."
+    },
+    {
+      "id": 3,
+      "title": "Nghiệp vụ thư viện",
+      "text": "ThuVien cùng hai enum TieuChiSapXep và KetQua."
+    },
+    {
+      "id": 4,
+      "title": "Giao diện và điều khiển",
+      "text": "GiaoDien vẽ console; UngDung nối mọi thứ và chạy vòng lặp menu."
+    }
+  ],
+  "layoutRef": {
+    "w": 360,
+    "meanH": 280
+  }
+}

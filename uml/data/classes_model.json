@@ -1,0 +1,630 @@
+{
+  "classes": [
+    {
+      "id": "TaiLieu",
+      "stereotype": "abstract",
+      "package": "model",
+      "status": "core",
+      "read": 2,
+      "stage": 2,
+      "readWhy": "Lớp cha của các loại tài liệu; đọc trước Sach, TapChi, Bao.",
+      "summary": "Lớp cha trừu tượng: dữ liệu chung của mọi tài liệu và trạng thái mượn/trả.",
+      "role": "Giữ mã, tên, nhà xuất bản, năm và cờ đã mượn. Tự kiểm tra quy tắc mượn/trả. Mỗi lớp con tự tính tiền, tự ghi file và tự nhập/xuất.",
+      "uses": [
+        "`VanBan`: `canLe`, `catChuoi`, `dinhDangTien` để in một dòng bảng."
+      ],
+      "invariants": [
+        "Một tài liệu không thể được mượn hai lần liên tiếp: `muon()` trả false nếu `daMuon` đã true."
+      ],
+      "attributes": [
+        {
+          "name": "maTaiLieu",
+          "type": "string",
+          "vis": "#",
+          "summary": "Mã tài liệu, duy nhất trong thư viện (không phân biệt hoa thường)."
+        },
+        {
+          "name": "tenTaiLieu",
+          "type": "string",
+          "vis": "#",
+          "summary": "Tên tài liệu."
+        },
+        {
+          "name": "nhaXuatBan",
+          "type": "string",
+          "vis": "#",
+          "summary": "Nhà xuất bản."
+        },
+        {
+          "name": "namXuatBan",
+          "type": "int",
+          "vis": "#",
+          "summary": "Năm xuất bản, trong khoảng 1900 đến 2026."
+        },
+        {
+          "name": "daMuon",
+          "type": "bool",
+          "vis": "#",
+          "summary": "true nếu tài liệu đang được mượn."
+        }
+      ],
+      "methods": [
+        {
+          "name": "TaiLieu",
+          "vis": "+",
+          "params": [],
+          "summary": "Tạo tài liệu rỗng (năm 2026, chưa mượn), dùng khi nhập từ bàn phím.",
+          "ctor": true
+        },
+        {
+          "name": "TaiLieu",
+          "vis": "+",
+          "params": [
+            "ma: string",
+            "ten: string",
+            "nxb: string",
+            "nam: int",
+            "muon: bool = false"
+          ],
+          "summary": "Tạo tài liệu với đầy đủ thông tin chung.",
+          "ctor": true
+        },
+        {
+          "name": "~TaiLieu",
+          "vis": "+",
+          "params": [],
+          "summary": "Hàm hủy ảo: xóa đúng đối tượng lớp con qua con trỏ `TaiLieu*`."
+        },
+        {
+          "name": "getMaTaiLieu",
+          "vis": "+",
+          "params": [],
+          "summary": "Lấy mã tài liệu.",
+          "returns": "string"
+        },
+        {
+          "name": "setMaTaiLieu",
+          "vis": "+",
+          "params": [
+            "ma: string"
+          ],
+          "summary": "Đặt mã tài liệu.",
+          "returns": "void"
+        },
+        {
+          "name": "getTenTaiLieu",
+          "vis": "+",
+          "params": [],
+          "summary": "Lấy tên tài liệu.",
+          "returns": "string"
+        },
+        {
+          "name": "setTenTaiLieu",
+          "vis": "+",
+          "params": [
+            "ten: string"
+          ],
+          "summary": "Đặt tên tài liệu.",
+          "returns": "void"
+        },
+        {
+          "name": "getNhaXuatBan",
+          "vis": "+",
+          "params": [],
+          "summary": "Lấy nhà xuất bản.",
+          "returns": "string"
+        },
+        {
+          "name": "setNhaXuatBan",
+          "vis": "+",
+          "params": [
+            "nxb: string"
+          ],
+          "summary": "Đặt nhà xuất bản.",
+          "returns": "void"
+        },
+        {
+          "name": "getNamXuatBan",
+          "vis": "+",
+          "params": [],
+          "summary": "Lấy năm xuất bản.",
+          "returns": "int"
+        },
+        {
+          "name": "setNamXuatBan",
+          "vis": "+",
+          "params": [
+            "nam: int"
+          ],
+          "summary": "Đặt năm xuất bản.",
+          "returns": "void"
+        },
+        {
+          "name": "getDaMuon",
+          "vis": "+",
+          "params": [],
+          "summary": "Cho biết tài liệu có đang được mượn không.",
+          "returns": "bool"
+        },
+        {
+          "name": "setDaMuon",
+          "vis": "+",
+          "params": [
+            "tt: bool"
+          ],
+          "summary": "Đặt thẳng trạng thái mượn, không kiểm tra. Mượn/trả bình thường nên dùng `muon()` và `tra()`.",
+          "returns": "void"
+        },
+        {
+          "name": "muon",
+          "vis": "+",
+          "params": [],
+          "summary": "Đánh dấu đã mượn; trả false nếu đang được mượn sẵn.",
+          "returns": "bool",
+          "role": "`ThuVien.muon` gọi hàm này.",
+          "post": [
+            "Trả true thì `daMuon` = true."
+          ]
+        },
+        {
+          "name": "tra",
+          "vis": "+",
+          "params": [],
+          "summary": "Đánh dấu đã trả; trả false nếu vốn đang ở trong kho.",
+          "returns": "bool",
+          "role": "`ThuVien.tra` gọi hàm này.",
+          "post": [
+            "Trả true thì `daMuon` = false."
+          ]
+        },
+        {
+          "name": "TinhTien",
+          "vis": "+",
+          "params": [],
+          "summary": "Tính thành tiền; mỗi loại có công thức riêng.",
+          "returns": "double",
+          "abstract": true
+        },
+        {
+          "name": "xuatFile",
+          "vis": "+",
+          "params": [],
+          "summary": "Tạo dòng ghi file, các cột ngăn bởi dấu `|`.",
+          "returns": "string",
+          "abstract": true,
+          "example": "`\"SACH|S001|Tên|NXB|2024|0|420|Tác giả\"`"
+        },
+        {
+          "name": "Nhap",
+          "vis": "+",
+          "params": [
+            "is: istream&"
+          ],
+          "summary": "Nhập thông tin chung từ bàn phím (mã chỉ hỏi khi chưa có); năm phải từ 1900 đến 2026.",
+          "returns": "void"
+        },
+        {
+          "name": "Xuat",
+          "vis": "+",
+          "params": [
+            "os: ostream&"
+          ],
+          "summary": "In các cột đầu của một dòng bảng: mã, tên, nhà xuất bản, năm. Lớp con in tiếp.",
+          "returns": "void"
+        },
+        {
+          "name": "HienThiThongTin",
+          "vis": "+",
+          "params": [],
+          "summary": "In một dòng bảng đầy đủ của tài liệu ra màn hình, kèm xuống dòng.",
+          "returns": "void"
+        },
+        {
+          "name": "xuatPhanDuoi",
+          "vis": "#",
+          "params": [
+            "os: ostream&",
+            "loai: string",
+            "mauLoai: string",
+            "chiTiet: string"
+          ],
+          "summary": "In các cột cuối (loại, đặc trưng, trạng thái, thành tiền); các lớp con dùng chung.",
+          "returns": "void"
+        },
+        {
+          "name": "operator>>",
+          "vis": "+",
+          "params": [
+            "is: istream&",
+            "tl: TaiLieu&"
+          ],
+          "summary": "Hàm friend cho phép `cin >> tailieu`; gọi `Nhap` đúng với loại thực.",
+          "returns": "istream&"
+        },
+        {
+          "name": "operator<<",
+          "vis": "+",
+          "params": [
+            "os: ostream&",
+            "tl: TaiLieu"
+          ],
+          "summary": "Hàm friend cho phép `cout << tailieu`; gọi `Xuat` đúng với loại thực.",
+          "returns": "ostream&"
+        }
+      ],
+      "impl": {
+        "cpp": "**Khoảng 118 dòng** trong `test1.cpp`. Trường dữ liệu là `protected` để lớp con dùng trong `xuatFile`."
+      },
+      "notes": [],
+      "pos": [
+        900,
+        1450
+      ]
+    },
+    {
+      "id": "Sach",
+      "stereotype": "class",
+      "package": "model",
+      "status": "core",
+      "read": 3,
+      "stage": 2,
+      "readWhy": "Loại tài liệu đầu tiên; có thêm tác giả và số trang.",
+      "summary": "Sách: thêm tác giả và số trang. Thành tiền theo số trang.",
+      "role": "Lớp con của `TaiLieu`, ghi đè các hàm thuần ảo.",
+      "uses": [],
+      "invariants": [
+        "Số trang lớn hơn 0 khi nhập từ bàn phím."
+      ],
+      "attributes": [
+        {
+          "name": "soTrang",
+          "type": "int",
+          "vis": "-",
+          "summary": "Số trang của sách."
+        },
+        {
+          "name": "tacGia",
+          "type": "string",
+          "vis": "-",
+          "summary": "Tên tác giả."
+        }
+      ],
+      "methods": [
+        {
+          "name": "Sach",
+          "vis": "+",
+          "params": [],
+          "summary": "Tạo sách rỗng, dùng khi nhập từ bàn phím.",
+          "ctor": true
+        },
+        {
+          "name": "Sach",
+          "vis": "+",
+          "params": [
+            "ma: string",
+            "ten: string",
+            "nxb: string",
+            "nam: int",
+            "trang: int",
+            "tg: string",
+            "muon: bool = false"
+          ],
+          "summary": "Tạo sách với đầy đủ thông tin.",
+          "ctor": true
+        },
+        {
+          "name": "getSoTrang",
+          "vis": "+",
+          "params": [],
+          "summary": "Lấy số trang.",
+          "returns": "int"
+        },
+        {
+          "name": "setSoTrang",
+          "vis": "+",
+          "params": [
+            "trang: int"
+          ],
+          "summary": "Đặt số trang.",
+          "returns": "void"
+        },
+        {
+          "name": "getTacGia",
+          "vis": "+",
+          "params": [],
+          "summary": "Lấy tên tác giả.",
+          "returns": "string"
+        },
+        {
+          "name": "setTacGia",
+          "vis": "+",
+          "params": [
+            "tg: string"
+          ],
+          "summary": "Đặt tên tác giả.",
+          "returns": "void"
+        },
+        {
+          "name": "TinhTien",
+          "vis": "+",
+          "params": [],
+          "summary": "1.500 đồng mỗi trang.",
+          "returns": "double",
+          "override": true,
+          "example": "420 trang → 630.000 đ."
+        },
+        {
+          "name": "xuatFile",
+          "vis": "+",
+          "params": [],
+          "summary": "Dòng ghi file bắt đầu bằng nhãn `SACH`.",
+          "returns": "string",
+          "override": true
+        },
+        {
+          "name": "Nhap",
+          "vis": "+",
+          "params": [
+            "is: istream&"
+          ],
+          "summary": "Nhập thông tin chung, rồi tác giả và số trang (phải lớn hơn 0).",
+          "returns": "void",
+          "override": true
+        },
+        {
+          "name": "Xuat",
+          "vis": "+",
+          "params": [
+            "os: ostream&"
+          ],
+          "summary": "In một dòng bảng; cột đặc trưng là tác giả và số trang.",
+          "returns": "void",
+          "override": true
+        }
+      ],
+      "impl": {
+        "cpp": "**Khoảng 52 dòng** trong `test1.cpp`."
+      },
+      "notes": [],
+      "pos": [
+        450,
+        1950
+      ]
+    },
+    {
+      "id": "TapChi",
+      "stereotype": "class",
+      "package": "model",
+      "status": "core",
+      "read": 4,
+      "stage": 2,
+      "readWhy": "Loại thứ hai; có thêm số và tháng phát hành.",
+      "summary": "Tạp chí: thêm số phát hành và tháng phát hành.",
+      "role": "Lớp con của `TaiLieu`, ghi đè các hàm thuần ảo.",
+      "uses": [],
+      "invariants": [
+        "Số phát hành lớn hơn 0; tháng từ 1 đến 12 khi nhập từ bàn phím."
+      ],
+      "attributes": [
+        {
+          "name": "soPhatHanh",
+          "type": "int",
+          "vis": "-",
+          "summary": "Số phát hành (kỳ)."
+        },
+        {
+          "name": "thangPhatHanh",
+          "type": "int",
+          "vis": "-",
+          "summary": "Tháng phát hành, từ 1 đến 12."
+        }
+      ],
+      "methods": [
+        {
+          "name": "TapChi",
+          "vis": "+",
+          "params": [],
+          "summary": "Tạo tạp chí rỗng (số 1, tháng 1), dùng khi nhập từ bàn phím.",
+          "ctor": true
+        },
+        {
+          "name": "TapChi",
+          "vis": "+",
+          "params": [
+            "ma: string",
+            "ten: string",
+            "nxb: string",
+            "nam: int",
+            "soPH: int",
+            "thangPH: int",
+            "muon: bool = false"
+          ],
+          "summary": "Tạo tạp chí với đầy đủ thông tin.",
+          "ctor": true
+        },
+        {
+          "name": "getSoPhatHanh",
+          "vis": "+",
+          "params": [],
+          "summary": "Lấy số phát hành.",
+          "returns": "int"
+        },
+        {
+          "name": "setSoPhatHanh",
+          "vis": "+",
+          "params": [
+            "soPH: int"
+          ],
+          "summary": "Đặt số phát hành.",
+          "returns": "void"
+        },
+        {
+          "name": "getThangPhatHanh",
+          "vis": "+",
+          "params": [],
+          "summary": "Lấy tháng phát hành.",
+          "returns": "int"
+        },
+        {
+          "name": "setThangPhatHanh",
+          "vis": "+",
+          "params": [
+            "thangPH: int"
+          ],
+          "summary": "Đặt tháng phát hành.",
+          "returns": "void"
+        },
+        {
+          "name": "TinhTien",
+          "vis": "+",
+          "params": [],
+          "summary": "45.000 đồng, cộng 1.000 mỗi tháng và 500 mỗi số phát hành.",
+          "returns": "double",
+          "override": true,
+          "example": "Số 12, tháng 10 → 61.000 đ."
+        },
+        {
+          "name": "xuatFile",
+          "vis": "+",
+          "params": [],
+          "summary": "Dòng ghi file bắt đầu bằng nhãn `TAPCHI`.",
+          "returns": "string",
+          "override": true
+        },
+        {
+          "name": "Nhap",
+          "vis": "+",
+          "params": [
+            "is: istream&"
+          ],
+          "summary": "Nhập thông tin chung, rồi số phát hành và tháng.",
+          "returns": "void",
+          "override": true
+        },
+        {
+          "name": "Xuat",
+          "vis": "+",
+          "params": [
+            "os: ostream&"
+          ],
+          "summary": "In một dòng bảng; cột đặc trưng là kỳ và tháng.",
+          "returns": "void",
+          "override": true
+        }
+      ],
+      "impl": {
+        "cpp": "**Khoảng 55 dòng** trong `test1.cpp`."
+      },
+      "notes": [],
+      "pos": [
+        900,
+        1950
+      ]
+    },
+    {
+      "id": "Bao",
+      "stereotype": "class",
+      "package": "model",
+      "status": "core",
+      "read": 5,
+      "stage": 2,
+      "readWhy": "Loại thứ ba; chỉ thêm ngày phát hành.",
+      "summary": "Báo: thêm ngày phát hành dạng dd/mm/yyyy.",
+      "role": "Lớp con của `TaiLieu`, ghi đè các hàm thuần ảo.",
+      "uses": [],
+      "invariants": [],
+      "attributes": [
+        {
+          "name": "ngayPhatHanh",
+          "type": "string",
+          "vis": "-",
+          "summary": "Ngày phát hành, dạng `dd/mm/yyyy`."
+        }
+      ],
+      "methods": [
+        {
+          "name": "Bao",
+          "vis": "+",
+          "params": [],
+          "summary": "Tạo báo rỗng (ngày 01/01/2026), dùng khi nhập từ bàn phím.",
+          "ctor": true
+        },
+        {
+          "name": "Bao",
+          "vis": "+",
+          "params": [
+            "ma: string",
+            "ten: string",
+            "nxb: string",
+            "nam: int",
+            "ngayPH: string",
+            "muon: bool = false"
+          ],
+          "summary": "Tạo báo với đầy đủ thông tin.",
+          "ctor": true
+        },
+        {
+          "name": "getNgayPhatHanh",
+          "vis": "+",
+          "params": [],
+          "summary": "Lấy ngày phát hành.",
+          "returns": "string"
+        },
+        {
+          "name": "setNgayPhatHanh",
+          "vis": "+",
+          "params": [
+            "ngayPH: string"
+          ],
+          "summary": "Đặt ngày phát hành.",
+          "returns": "void"
+        },
+        {
+          "name": "TinhTien",
+          "vis": "+",
+          "params": [],
+          "summary": "20.000 đồng nếu phát hành ngày 01 hoặc 15; ngày khác 15.000 đồng.",
+          "returns": "double",
+          "override": true,
+          "example": "`15/10/2026` → 20.000 đ."
+        },
+        {
+          "name": "xuatFile",
+          "vis": "+",
+          "params": [],
+          "summary": "Dòng ghi file bắt đầu bằng nhãn `BAO`.",
+          "returns": "string",
+          "override": true
+        },
+        {
+          "name": "Nhap",
+          "vis": "+",
+          "params": [
+            "is: istream&"
+          ],
+          "summary": "Nhập thông tin chung, rồi ngày phát hành.",
+          "returns": "void",
+          "override": true
+        },
+        {
+          "name": "Xuat",
+          "vis": "+",
+          "params": [
+            "os: ostream&"
+          ],
+          "summary": "In một dòng bảng; cột đặc trưng là ngày phát hành.",
+          "returns": "void",
+          "override": true
+        }
+      ],
+      "impl": {
+        "cpp": "**Khoảng 44 dòng** trong `test1.cpp`."
+      },
+      "notes": [],
+      "pos": [
+        1350,
+        1950
+      ]
+    }
+  ]
+}

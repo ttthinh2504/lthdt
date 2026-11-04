@@ -1,0 +1,97 @@
+{
+  "classes": [
+    {
+      "id": "BasicTypes",
+      "stereotype": "types",
+      "package": "util",
+      "status": "core",
+      "read": 0,
+      "stage": 0,
+      "readWhy": "Đọc trước nhất: mọi chữ ký trong sơ đồ dùng các tên kiểu này.",
+      "summary": "Bảng tra các kiểu có sẵn của C++ dùng trong chữ ký.",
+      "role": "Không phải một lớp. Sơ đồ viết `string` và `vector<T>` cho gọn; trong mã là `std::string` và `std::vector<T>`.",
+      "uses": [],
+      "invariants": [],
+      "attributes": [
+        {
+          "name": "string",
+          "token": "string",
+          "type": "chuỗi ký tự",
+          "vis": "",
+          "summary": "Chuỗi ký tự có độ dài thay đổi: mã, tên, tên file, thông báo.",
+          "example": "`std::string ma = \"S001\";`",
+          "cpp": "`std::string` (`<string>`)."
+        },
+        {
+          "name": "vector<T>",
+          "token": "vector",
+          "type": "mảng động các phần tử kiểu T",
+          "vis": "",
+          "summary": "Mảng tự nới rộng. Thư viện dùng `vector<TaiLieu*>` để chứa các tài liệu.",
+          "example": "`std::vector<std::string> menu;`",
+          "cpp": "`std::vector<T>` (`<vector>`)."
+        },
+        {
+          "name": "int",
+          "token": "int",
+          "type": "số nguyên",
+          "vis": "",
+          "summary": "Số nguyên có dấu: năm, số trang, chỉ số menu.",
+          "cpp": "`int`"
+        },
+        {
+          "name": "double",
+          "token": "double",
+          "type": "số thực",
+          "vis": "",
+          "summary": "Số thực: thành tiền của tài liệu.",
+          "cpp": "`double`"
+        },
+        {
+          "name": "bool",
+          "token": "bool",
+          "type": "đúng hoặc sai",
+          "vis": "",
+          "summary": "Giá trị `true` hoặc `false`: trạng thái đã mượn, kết quả kiểm tra.",
+          "cpp": "`bool`"
+        },
+        {
+          "name": "void",
+          "token": "void",
+          "type": "không trả về gì",
+          "vis": "",
+          "summary": "Hàm chỉ làm một việc, không trả giá trị.",
+          "cpp": "`void`"
+        },
+        {
+          "name": "istream",
+          "token": "istream",
+          "type": "luồng nhập",
+          "vis": "",
+          "summary": "Luồng đọc dữ liệu, ví dụ `cin`. `Nhap` đọc từ luồng này.",
+          "cpp": "`std::istream` (`<iostream>`)."
+        },
+        {
+          "name": "ostream",
+          "token": "ostream",
+          "type": "luồng xuất",
+          "vis": "",
+          "summary": "Luồng ghi dữ liệu, ví dụ `cout`. `Xuat` ghi ra luồng này.",
+          "cpp": "`std::ostream` (`<iostream>`)."
+        }
+      ],
+      "methods": [],
+      "impl": {
+        "cpp": "Không có lớp nào; đây là kiểu của C++ và thư viện chuẩn."
+      },
+      "notes": [
+        "Dấu `*` sau kiểu là con trỏ (`TaiLieu*` trỏ tới một tài liệu). Dấu `&` là tham chiếu: hàm ghi kết quả thẳng vào biến của nơi gọi.",
+        "Hằng toàn cục dùng chung: `TEN_FILE` (tên file dữ liệu) và các mã màu ANSI `RESET`, `GRAY`, `RED`, `GREEN`, `YELLOW`, `BLUE`, `MAGENTA`, `CYAN`, `WHITE`, `H_LIGHT`."
+      ],
+      "pos": [
+        0,
+        0
+      ]
+    }
+  ]
+}

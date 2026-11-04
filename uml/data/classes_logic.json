@@ -1,0 +1,295 @@
+{
+  "classes": [
+    {
+      "id": "TieuChiSapXep",
+      "stereotype": "enum",
+      "package": "logic",
+      "status": "core",
+      "read": 6,
+      "stage": 3,
+      "readWhy": "Kiểu nhỏ, khai báo bên trong `ThuVien`; `sapXep` nhận kiểu này.",
+      "summary": "Tiêu chí sắp xếp danh sách tài liệu.",
+      "role": "Khai báo trong `ThuVien`, dùng là `ThuVien::TieuChiSapXep`.",
+      "uses": [],
+      "invariants": [],
+      "attributes": [],
+      "methods": [],
+      "values": [
+        {
+          "name": "THEO_TEN",
+          "meaning": "Tên tài liệu, từ A đến Z."
+        },
+        {
+          "name": "THEO_NAM",
+          "meaning": "Năm xuất bản, từ mới đến cũ."
+        },
+        {
+          "name": "THEO_GIA",
+          "meaning": "Thành tiền, từ cao đến thấp."
+        }
+      ],
+      "impl": {
+        "cpp": "`enum class TieuChiSapXep { THEO_TEN, THEO_NAM, THEO_GIA };` bên trong `ThuVien`."
+      },
+      "notes": [],
+      "pos": [
+        1500,
+        900
+      ]
+    },
+    {
+      "id": "KetQua",
+      "stereotype": "enum",
+      "package": "logic",
+      "status": "core",
+      "read": 7,
+      "stage": 3,
+      "readWhy": "Kiểu nhỏ, khai báo bên trong `ThuVien`; `muon` và `tra` trả kiểu này.",
+      "summary": "Kết quả của thao tác mượn hoặc trả.",
+      "role": "Khai báo trong `ThuVien`, dùng là `ThuVien::KetQua`. Giao diện dựa vào đây để chọn thông báo.",
+      "uses": [],
+      "invariants": [],
+      "attributes": [],
+      "methods": [],
+      "values": [
+        {
+          "name": "THANH_CONG",
+          "meaning": "Đã đổi trạng thái và lưu file."
+        },
+        {
+          "name": "KHONG_TIM_THAY",
+          "meaning": "Không có tài liệu mang mã đó."
+        },
+        {
+          "name": "SAI_TRANG_THAI",
+          "meaning": "Mượn tài liệu đang được mượn, hoặc trả tài liệu đang ở kho."
+        }
+      ],
+      "impl": {
+        "cpp": "`enum class KetQua { THANH_CONG, KHONG_TIM_THAY, SAI_TRANG_THAI };` bên trong `ThuVien`."
+      },
+      "notes": [],
+      "pos": [
+        1500,
+        1400
+      ]
+    },
+    {
+      "id": "ThuVien",
+      "stereotype": "class",
+      "package": "logic",
+      "status": "core",
+      "read": 8,
+      "stage": 3,
+      "readWhy": "Dùng `TaiLieu`, ba lớp con và `VanBan` đã đọc.",
+      "summary": "Sở hữu danh sách tài liệu, đọc/ghi file và làm mọi nghiệp vụ.",
+      "role": "Mỗi thay đổi (thêm, xóa, mượn, trả, sắp xếp) được lưu vào file ngay. Hủy `ThuVien` thì xóa luôn các tài liệu nó sở hữu.",
+      "uses": [
+        "`TaiLieu`: `getMaTaiLieu`, `getTenTaiLieu`, `muon`, `tra`, `TinhTien`, `xuatFile`.",
+        "`Sach`, `TapChi`, `Bao`: tạo khi đọc file và khi tạo dữ liệu mẫu.",
+        "`VanBan.chuThuong`, `VanBan.catKhoangTrang`."
+      ],
+      "invariants": [
+        "Mã tài liệu không trùng nhau (không phân biệt hoa thường): nơi gọi `them` phải kiểm trước bằng `tonTai`."
+      ],
+      "attributes": [
+        {
+          "name": "ds",
+          "type": "vector<TaiLieu*>",
+          "vis": "-",
+          "summary": "Danh sách con trỏ tới các tài liệu; thư viện sở hữu và tự xóa."
+        },
+        {
+          "name": "tenFile",
+          "type": "string",
+          "vis": "-",
+          "summary": "Tên file `thuvien.txt` để đọc và ghi."
+        }
+      ],
+      "methods": [
+        {
+          "name": "ThuVien",
+          "vis": "+",
+          "params": [
+            "tenFile: string"
+          ],
+          "summary": "Gắn thư viện với file; chưa đọc file. Cấm sao chép vì giữ con trỏ.",
+          "ctor": true
+        },
+        {
+          "name": "~ThuVien",
+          "vis": "+",
+          "params": [],
+          "summary": "Xóa mọi tài liệu mà thư viện đang sở hữu."
+        },
+        {
+          "name": "khoiTao",
+          "vis": "+",
+          "params": [],
+          "summary": "Đọc dữ liệu từ file; nếu chưa có thì tạo dữ liệu mẫu và lưu lại.",
+          "returns": "void"
+        },
+        {
+          "name": "luuFile",
+          "vis": "+",
+          "params": [],
+          "summary": "Ghi toàn bộ danh sách ra file, mỗi tài liệu một dòng.",
+          "returns": "void"
+        },
+        {
+          "name": "danhSach",
+          "vis": "+",
+          "params": [],
+          "summary": "Trả danh sách tài liệu hiện có, chỉ để đọc.",
+          "returns": "vector<TaiLieu*>"
+        },
+        {
+          "name": "tim",
+          "vis": "+",
+          "params": [
+            "ma: string"
+          ],
+          "summary": "Tìm theo mã, không phân biệt hoa thường; không có thì trả nullptr.",
+          "returns": "TaiLieu*",
+          "complexity": "O(n)"
+        },
+        {
+          "name": "tonTai",
+          "vis": "+",
+          "params": [
+            "ma: string"
+          ],
+          "summary": "Cho biết mã này đã có trong thư viện chưa.",
+          "returns": "bool"
+        },
+        {
+          "name": "timKiem",
+          "vis": "+",
+          "params": [
+            "tuKhoa: string"
+          ],
+          "summary": "Lấy các tài liệu có từ khóa nằm trong mã hoặc tên.",
+          "returns": "vector<TaiLieu*>",
+          "complexity": "O(n)"
+        },
+        {
+          "name": "locTheoTrangThai",
+          "vis": "+",
+          "params": [
+            "daMuon: bool"
+          ],
+          "summary": "Lấy các tài liệu đang mượn (true) hoặc còn trong kho (false).",
+          "returns": "vector<TaiLieu*>"
+        },
+        {
+          "name": "soLuong",
+          "vis": "+",
+          "params": [],
+          "summary": "Tổng số tài liệu.",
+          "returns": "int"
+        },
+        {
+          "name": "soDangMuon",
+          "vis": "+",
+          "params": [],
+          "summary": "Số tài liệu đang được mượn.",
+          "returns": "int"
+        },
+        {
+          "name": "tongGiaTri",
+          "vis": "+",
+          "params": [],
+          "summary": "Tổng thành tiền của mọi tài liệu.",
+          "returns": "double"
+        },
+        {
+          "name": "them",
+          "vis": "+",
+          "params": [
+            "tl: TaiLieu*"
+          ],
+          "summary": "Thêm tài liệu rồi lưu file; thư viện nhận quyền sở hữu con trỏ.",
+          "returns": "void",
+          "pre": [
+            "Mã của `tl` chưa có trong thư viện."
+          ],
+          "post": [
+            "`soLuong()` tăng 1."
+          ]
+        },
+        {
+          "name": "xoa",
+          "vis": "+",
+          "params": [
+            "ma: string"
+          ],
+          "summary": "Xóa tài liệu theo mã rồi lưu file; trả false nếu không thấy.",
+          "returns": "bool"
+        },
+        {
+          "name": "muon",
+          "vis": "+",
+          "params": [
+            "ma: string"
+          ],
+          "summary": "Cho mượn tài liệu theo mã; lưu file khi thành công.",
+          "returns": "KetQua"
+        },
+        {
+          "name": "tra",
+          "vis": "+",
+          "params": [
+            "ma: string"
+          ],
+          "summary": "Nhận trả tài liệu theo mã; lưu file khi thành công.",
+          "returns": "KetQua"
+        },
+        {
+          "name": "sapXep",
+          "vis": "+",
+          "params": [
+            "tieuChi: TieuChiSapXep"
+          ],
+          "summary": "Sắp xếp danh sách theo tiêu chí rồi lưu file.",
+          "returns": "void",
+          "complexity": "O(n log n)"
+        },
+        {
+          "name": "taoTuDong",
+          "vis": "-",
+          "params": [
+            "t: vector<string>"
+          ],
+          "summary": "Tạo đúng loại tài liệu từ các cột của một dòng file; trả nullptr nếu dòng hỏng.",
+          "returns": "TaiLieu*",
+          "static": true,
+          "role": "Chỗ duy nhất biết các nhãn `SACH`, `TAPCHI`, `BAO`."
+        },
+        {
+          "name": "docFile",
+          "vis": "-",
+          "params": [],
+          "summary": "Đọc file vào danh sách, bỏ qua dòng trống và dòng hỏng; trả false nếu không đọc được gì.",
+          "returns": "bool"
+        },
+        {
+          "name": "taoDuLieuMau",
+          "vis": "-",
+          "params": [],
+          "summary": "Thêm 12 tài liệu mẫu, dùng khi chưa có dữ liệu.",
+          "returns": "void"
+        }
+      ],
+      "impl": {
+        "cpp": "**Khoảng 212 dòng** trong `test1.cpp`. Hai enum `TieuChiSapXep` và `KetQua` khai báo ngay đầu lớp, trong phần `public`."
+      },
+      "notes": [
+        "Sao chép bị cấm (`= delete`) để tránh hai đối tượng cùng xóa một tài liệu."
+      ],
+      "pos": [
+        900,
+        950
+      ]
+    }
+  ]
+}

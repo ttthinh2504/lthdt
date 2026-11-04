@@ -1,0 +1,315 @@
+{
+  "classes": [
+    {
+      "id": "GiaoDien",
+      "stereotype": "utility",
+      "package": "ui",
+      "status": "core",
+      "read": 9,
+      "stage": 4,
+      "readWhy": "Chỉ dùng `VanBan`; `UngDung` sẽ dùng lớp này.",
+      "summary": "Mọi việc trên console: khởi tạo, menu, kẻ bảng, nhập liệu, thông báo.",
+      "role": "Chỉ gồm hàm static. Không biết gì về tài liệu hay thư viện: nhận chuỗi và danh sách chuỗi để vẽ.",
+      "uses": [
+        "`VanBan`: `canLe`, `lapChuoi`, `doDaiHienThi`, `catKhoangTrang`.",
+        "Hằng màu toàn cục (`RED`, `GREEN`, `H_LIGHT`...)."
+      ],
+      "invariants": [],
+      "attributes": [],
+      "methods": [
+        {
+          "name": "layKichThuocConsole",
+          "vis": "-",
+          "params": [
+            "cols: int&",
+            "rows: int&"
+          ],
+          "summary": "Lấy số cột và dòng của cửa sổ console; lỗi thì dùng 120 x 30.",
+          "returns": "void",
+          "static": true
+        },
+        {
+          "name": "canGiua",
+          "vis": "-",
+          "params": [
+            "s: string",
+            "w: int"
+          ],
+          "summary": "Căn chuỗi vào giữa khung rộng `w`.",
+          "returns": "string",
+          "static": true
+        },
+        {
+          "name": "khoiTao",
+          "vis": "+",
+          "params": [],
+          "summary": "Bật UTF-8 và chế độ hiểu mã màu ANSI; gọi một lần lúc bắt đầu.",
+          "returns": "void",
+          "static": true
+        },
+        {
+          "name": "xoaManHinh",
+          "vis": "+",
+          "params": [],
+          "summary": "Xóa toàn bộ màn hình.",
+          "returns": "void",
+          "static": true
+        },
+        {
+          "name": "keKhungBang",
+          "vis": "+",
+          "params": [
+            "viTri: int"
+          ],
+          "summary": "Vẽ đường kẻ ngang của bảng: 0 mép trên, 1 đường giữa, 2 mép dưới.",
+          "returns": "void",
+          "static": true
+        },
+        {
+          "name": "inTieuDeBang",
+          "vis": "+",
+          "params": [],
+          "summary": "In phần đầu bảng tài liệu: mép trên, tên cột, đường kẻ giữa.",
+          "returns": "void",
+          "static": true
+        },
+        {
+          "name": "inTieuDeChucNang",
+          "vis": "+",
+          "params": [
+            "tieuDe: string"
+          ],
+          "summary": "In khung tiêu đề của một chức năng.",
+          "returns": "void",
+          "static": true
+        },
+        {
+          "name": "chonMenu",
+          "vis": "+",
+          "params": [
+            "tieuDe: string",
+            "muc: vector<string>",
+            "thongKe: string"
+          ],
+          "summary": "Hiện menu chọn bằng mũi tên và Enter; trả chỉ số mục chọn, Esc trả mục cuối.",
+          "returns": "int",
+          "static": true
+        },
+        {
+          "name": "tamDung",
+          "vis": "+",
+          "params": [
+            "hanhDongTiep: string"
+          ],
+          "summary": "Chờ nhấn một phím bất kỳ; `hanhDongTiep` là câu cuối của lời nhắc, mặc định «quay về menu».",
+          "returns": "void",
+          "static": true
+        },
+        {
+          "name": "nhapCoThoat",
+          "vis": "+",
+          "params": [
+            "loiNhac: string",
+            "ketQua: string&"
+          ],
+          "summary": "Đọc một dòng; trả false nếu bỏ trống hoặc nhập 0 (hủy).",
+          "returns": "bool",
+          "static": true
+        },
+        {
+          "name": "hoiXacNhan",
+          "vis": "+",
+          "params": [
+            "cauHoi: string"
+          ],
+          "summary": "Hỏi có/không bằng một phím; true nếu nhấn y hoặc Y.",
+          "returns": "bool",
+          "static": true
+        },
+        {
+          "name": "baoLoi",
+          "vis": "+",
+          "params": [
+            "noiDung: string"
+          ],
+          "summary": "In thông báo lỗi màu đỏ.",
+          "returns": "void",
+          "static": true
+        },
+        {
+          "name": "baoThanhCong",
+          "vis": "+",
+          "params": [
+            "nd: string"
+          ],
+          "summary": "In thông báo thành công màu xanh lá.",
+          "returns": "void",
+          "static": true
+        },
+        {
+          "name": "baoThongTin",
+          "vis": "+",
+          "params": [
+            "nd: string"
+          ],
+          "summary": "In thông báo thông tin màu vàng.",
+          "returns": "void",
+          "static": true
+        }
+      ],
+      "impl": {
+        "cpp": "**Khoảng 163 dòng** trong `test1.cpp`."
+      },
+      "notes": [
+        "Chỉ chạy trên Windows (`conio.h`, `windows.h`)."
+      ],
+      "pos": [
+        450,
+        0
+      ]
+    },
+    {
+      "id": "UngDung",
+      "stereotype": "class",
+      "package": "ui",
+      "status": "core",
+      "read": 10,
+      "stage": 4,
+      "readWhy": "Lớp cuối: nối giao diện với thư viện, dùng mọi lớp trước.",
+      "summary": "Chạy vòng lặp menu chính; mỗi chức năng là một hàm riêng.",
+      "role": "Sở hữu `ThuVien`. `main` chỉ tạo `UngDung` rồi gọi `chay`.",
+      "uses": [
+        "`ThuVien`: mọi thao tác nghiệp vụ.",
+        "`GiaoDien`: menu, bảng, nhập liệu, thông báo.",
+        "`Sach`, `TapChi`, `Bao`: tạo qua `themMoi`."
+      ],
+      "invariants": [],
+      "attributes": [
+        {
+          "name": "thuVien",
+          "type": "ThuVien",
+          "vis": "-",
+          "summary": "Thư viện duy nhất của chương trình, tạo cùng `UngDung`."
+        }
+      ],
+      "methods": [
+        {
+          "name": "UngDung",
+          "vis": "+",
+          "params": [],
+          "summary": "Tạo thư viện gắn với file `TEN_FILE`.",
+          "ctor": true
+        },
+        {
+          "name": "chay",
+          "vis": "+",
+          "params": [],
+          "summary": "Khởi tạo console và dữ liệu, rồi lặp: hiện menu, chạy chức năng, đến khi chọn thoát.",
+          "returns": "void"
+        },
+        {
+          "name": "moTaThongKe",
+          "vis": "-",
+          "params": [],
+          "summary": "Tạo dòng thống kê của menu: tổng, có sẵn, đang mượn.",
+          "returns": "string"
+        },
+        {
+          "name": "inBang",
+          "vis": "-",
+          "params": [
+            "danhSach: vector<TaiLieu*>"
+          ],
+          "summary": "In một bảng đầy đủ cho danh sách đã cho.",
+          "returns": "void",
+          "static": true
+        },
+        {
+          "name": "nhapMaMoi",
+          "vis": "-",
+          "params": [
+            "maOut: string&"
+          ],
+          "summary": "Nhập mã chưa có trong thư viện, hỏi lại nếu trùng; false nếu hủy.",
+          "returns": "bool"
+        },
+        {
+          "name": "themMoi",
+          "vis": "-",
+          "params": [
+            "tieuDe: string",
+            "tenLoai: string"
+          ],
+          "summary": "Chức năng 1, 2, 3: thêm tài liệu mới. Hàm template, dùng chung cho `Sach`, `TapChi`, `Bao`.",
+          "returns": "void"
+        },
+        {
+          "name": "xemDanhSach",
+          "vis": "-",
+          "params": [],
+          "summary": "Chức năng 4: in toàn bộ danh sách, tổng số và tổng giá trị kho.",
+          "returns": "void"
+        },
+        {
+          "name": "timKiem",
+          "vis": "-",
+          "params": [],
+          "summary": "Chức năng 5: tìm theo mã hoặc tên rồi in kết quả.",
+          "returns": "void"
+        },
+        {
+          "name": "muonTaiLieu",
+          "vis": "-",
+          "params": [],
+          "summary": "Chức năng 6: hiện tài liệu còn trong kho rồi cho mượn theo mã.",
+          "returns": "void"
+        },
+        {
+          "name": "traTaiLieu",
+          "vis": "-",
+          "params": [],
+          "summary": "Chức năng 7: hiện tài liệu đang mượn rồi nhận trả theo mã.",
+          "returns": "void"
+        },
+        {
+          "name": "sapXep",
+          "vis": "-",
+          "params": [],
+          "summary": "Chức năng 8: chọn tiêu chí, sắp xếp rồi in lại danh sách.",
+          "returns": "void"
+        },
+        {
+          "name": "xoaTaiLieu",
+          "vis": "-",
+          "params": [],
+          "summary": "Chức năng 9: tìm theo mã, hỏi xác nhận rồi xóa.",
+          "returns": "void"
+        },
+        {
+          "name": "thoat",
+          "vis": "-",
+          "params": [],
+          "summary": "Chức năng 0: lưu dữ liệu lần cuối và chào tạm biệt.",
+          "returns": "void"
+        },
+        {
+          "name": "xuLy",
+          "vis": "-",
+          "params": [
+            "chon: int"
+          ],
+          "summary": "Gọi đúng chức năng theo số đã chọn trong menu.",
+          "returns": "void"
+        }
+      ],
+      "impl": {
+        "cpp": "**Khoảng 221 dòng** trong `test1.cpp`. Thêm `main()` 5 dòng: `UngDung app; app.chay();`. Cả file `test1.cpp` dài 987 dòng, gồm cả comment và dòng trống."
+      },
+      "notes": [],
+      "pos": [
+        1125,
+        0
+      ]
+    }
+  ]
+}
