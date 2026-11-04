@@ -965,17 +965,17 @@ public:
             "0. Lưu & Thoát chương trình"
         };
 
-        int chon = -1;
-        do {
+        while (true) {
             int vt = GiaoDien::chonMenu("HỆ THỐNG QUẢN LÝ THƯ VIỆN", menu, moTaThongKe());
-            chon = (vt == 9) ? 0 : (vt + 1);
+            int chon = (vt == 9) ? 0 : (vt + 1);
             GiaoDien::xoaManHinh();
 
             xuLy(chon);
 
+            if (chon == 0) break;
             if (chon == 8) GiaoDien::tamDung("tiếp tục");
-            else if (chon != 0) GiaoDien::tamDung();
-        } while (chon != 0);
+            else GiaoDien::tamDung();
+        }
     }
 };
 
